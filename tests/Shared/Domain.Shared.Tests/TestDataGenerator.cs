@@ -5,9 +5,9 @@ using Domain.Shared.ValueObjects;
 namespace Domain.Shared.Tests;
 
 /// <summary>
-/// Base test class providing concrete implementations of classes and some general settings.
+/// Test Data generator class
 /// </summary>
-public abstract class BaseTest
+public abstract class TestDataGenerator
 {
     /// <summary>
     /// Concrete implementation of EntityId for testing purposes.

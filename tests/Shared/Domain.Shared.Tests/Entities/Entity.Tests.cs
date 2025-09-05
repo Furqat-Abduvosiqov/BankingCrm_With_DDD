@@ -1,6 +1,6 @@
 ﻿namespace Domain.Shared.Tests.Entities;
 
-public class EntityTests : BaseTest
+public class EntityTestsDataGenerator : TestDataGenerator
 {
      #region Domain Events
 
