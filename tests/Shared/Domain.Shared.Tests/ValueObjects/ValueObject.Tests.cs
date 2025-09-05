@@ -1,6 +1,6 @@
 ﻿namespace Domain.Shared.Tests.ValueObjects;
 
-public class ValueObjectTestsDataGenerator : TestDataGenerator
+public class ValueObjectTests : TestDataGenerator
 {
     [Fact]
     public void ValueObjects_With_Same_Values_Should_Be_Equal()

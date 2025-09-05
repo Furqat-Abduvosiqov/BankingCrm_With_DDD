@@ -2,7 +2,7 @@
 
 namespace Domain.Shared.Tests.ValueObjects;
 
-public class EntityIdTestsDataGenerator : TestDataGenerator
+public class EntityIdTests : TestDataGenerator
 {
     [Fact]
     public void New_Should_Create_NonEmpty_Id()
