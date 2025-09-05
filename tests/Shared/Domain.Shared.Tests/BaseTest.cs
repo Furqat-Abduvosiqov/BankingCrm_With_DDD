@@ -1,4 +1,6 @@
-﻿using Domain.Shared.ValueObjects;
+﻿using Domain.Shared.Entities;
+using Domain.Shared.Events;
+using Domain.Shared.ValueObjects;
 
 namespace Domain.Shared.Tests;
 
@@ -34,6 +36,30 @@ public abstract class BaseTest
             yield return Amount;
             yield return Currency;
         }
+    }
+    
+    /// <summary>
+    /// Concrete implementation of Entity for testing purposes.
+    /// </summary>
+    public sealed class TestEntity : Entity
+    {
+        public TestEntity(Guid? id = null)
+        {
+            Id = id ?? Guid.NewGuid();
+        }
+    }
+    
+    /// <summary>
+    /// Concrete implementation of IDomainEvent for testing purposes.
+    /// </summary>
+    protected class TestDomainEvent : IDomainEvent
+    {
+        public TestDomainEvent(DateTimeOffset occurredOn)
+        {
+            OccurredOn = occurredOn;
+        }
+
+        public DateTimeOffset OccurredOn { get; }
     }
 }
 

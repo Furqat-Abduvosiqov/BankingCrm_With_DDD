@@ -27,8 +27,4 @@
       <ProjectReference Include="..\..\..\src\Shared\Domain.Shared\Domain.Shared.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Entities\" />
-    </ItemGroup>
-
 </Project>
