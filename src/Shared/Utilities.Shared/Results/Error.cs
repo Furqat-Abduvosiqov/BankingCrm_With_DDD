@@ -1,5 +1,8 @@
 ﻿namespace Utilities.Shared.Results;
 
+/// <summary>
+/// Represents an error with a code and message.
+/// </summary>
 public class Error
 {
     public string Code { get; }

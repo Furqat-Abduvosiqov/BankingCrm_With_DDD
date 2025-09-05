@@ -1,5 +1,8 @@
 ﻿namespace Utilities.Shared.Results;
 
+/// <summary>
+/// Represents the result of an operation, which can be either a success with a value or a failure with an error.
+/// </summary>
 public class Result<T>
 {
     public T? Value { get; }
