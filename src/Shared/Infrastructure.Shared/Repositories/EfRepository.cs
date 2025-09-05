@@ -1,6 +1,7 @@
 ﻿using Domain.Shared.Entities;
 using Domain.Shared.ValueObjects;
 using Infrastructure.Shared.Repositories.Interfaces;
+using Infrastructure.Shared.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Shared.Repositories;

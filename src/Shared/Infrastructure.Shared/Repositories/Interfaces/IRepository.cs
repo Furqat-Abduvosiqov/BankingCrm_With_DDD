@@ -1,5 +1,6 @@
 ﻿using Domain.Shared.Entities;
 using Domain.Shared.ValueObjects;
+using Infrastructure.Shared.Specifications;
 
 namespace Infrastructure.Shared.Repositories.Interfaces;
 

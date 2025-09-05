@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
-using Infrastructure.Shared.Repositories.Interfaces;
 
-namespace Infrastructure.Shared.Repositories;
+namespace Infrastructure.Shared.Specifications;
 
 /// <summary>
 /// Base class for defining query specifications, including filtering, sorting, and paging logic for entities of type <typeparamref name="T"/>.

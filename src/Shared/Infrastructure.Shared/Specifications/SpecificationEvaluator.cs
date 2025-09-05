@@ -1,7 +1,6 @@
-﻿using Infrastructure.Shared.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Shared.Repositories;
+namespace Infrastructure.Shared.Specifications;
 
 /// <summary>
 /// Provides functionality to evaluate and apply specifications to an <see cref="IQueryable{T}"/> sequence,
