@@ -35,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6861CC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Shared.Tests", "tests\Shared\Domain.Shared.Tests\Domain.Shared.Tests.csproj", "{234C4E09-BE36-4D0C-AAD5-F07E43648228}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Shared.Tests", "tests\Shared\Infrastructure.Shared.Tests\Infrastructure.Shared.Tests.csproj", "{1A1B440D-CA93-4C97-A6F0-D839662DBED3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +167,18 @@ Global
 		{234C4E09-BE36-4D0C-AAD5-F07E43648228}.Release|x64.Build.0 = Release|Any CPU
 		{234C4E09-BE36-4D0C-AAD5-F07E43648228}.Release|x86.ActiveCfg = Release|Any CPU
 		{234C4E09-BE36-4D0C-AAD5-F07E43648228}.Release|x86.Build.0 = Release|Any CPU
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3}.Debug|x64.Build.0 = Debug|Any CPU
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3}.Debug|x86.Build.0 = Debug|Any CPU
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3}.Release|x64.ActiveCfg = Release|Any CPU
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3}.Release|x64.Build.0 = Release|Any CPU
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3}.Release|x86.ActiveCfg = Release|Any CPU
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -184,5 +198,6 @@ Global
 		{AC3E9E18-08B6-43DD-8DFC-168F25766C94} = {C147966B-6FED-4432-9000-5402E22BEBF1}
 		{6861CCCF-EE5F-400C-94C1-A1F2727D508D} = {0CF40FB0-D2C5-4FB5-85A8-150F73F1B7C4}
 		{234C4E09-BE36-4D0C-AAD5-F07E43648228} = {6861CCCF-EE5F-400C-94C1-A1F2727D508D}
+		{1A1B440D-CA93-4C97-A6F0-D839662DBED3} = {6861CCCF-EE5F-400C-94C1-A1F2727D508D}
 	EndGlobalSection
 EndGlobal
