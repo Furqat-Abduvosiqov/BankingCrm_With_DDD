@@ -114,3 +114,8 @@ This project is intended for **educational and reference purposes only**.
 It demonstrates how to structure a complex system using **Domain-Driven Design** and **Clean Architecture** principles.  
 It is **not production-ready** and should be carefully adapted, reviewed, and tested before being used in any real banking or financial environment.
 
+---
+## License
+This project is licensed under the MIT License. See [MIT License](https://opensource.org/licenses/MIT) for details.
+
+
