@@ -3,6 +3,10 @@ using Infrastructure.Shared.Repositories.Interfaces;
 
 namespace Infrastructure.Shared.Repositories;
 
+/// <summary>
+/// Base class for defining query specifications, including filtering, sorting, and paging logic for entities of type <typeparamref name="T"/>.
+/// </summary>
+/// <typeparam name="T">The entity type the specification applies to.</typeparam>
 public abstract class BaseSpecification<T> : ISpecification<T>
 {
     protected BaseSpecification(Expression<Func<T, bool>>? criteria = null)

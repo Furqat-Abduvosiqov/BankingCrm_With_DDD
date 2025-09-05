@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Shared.Repositories;
 
+/// <summary>
+/// Provides functionality to evaluate and apply specifications to an <see cref="IQueryable{T}"/> sequence,
+/// including filtering, sorting, paging, and eager loading of related entities.
+/// </summary>
 public static class SpecificationEvaluator<T> where T : class
 {
     public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
