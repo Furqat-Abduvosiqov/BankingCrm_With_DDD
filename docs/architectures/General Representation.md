@@ -1,4 +1,4 @@
-﻿# Core Functionality Overview for Banking CRM System
+﻿# General Representation for Banking CRM System
 
 ## Core Functional Modules :
 
@@ -85,4 +85,4 @@ Enhances service quality and knowledge sharing.
 
 ## Visual Representation
 
-![GeneralRepresentation.jpg](blob/dev/docs/images/GeneralRepresentation.jpg)
+![GeneralRepresentation.jpg](docs/images/GeneralRepresentation.jpg)
