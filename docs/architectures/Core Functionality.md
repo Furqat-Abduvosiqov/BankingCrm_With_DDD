@@ -85,4 +85,4 @@ Enhances service quality and knowledge sharing.
 
 ## Visual Representation
 
-![GeneralRepresentation.jpg](docs/images/GeneralRepresentation.jpg)
+![GeneralRepresentation.jpg](images/GeneralRepresentation.jpg)
