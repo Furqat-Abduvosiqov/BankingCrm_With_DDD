@@ -52,13 +52,10 @@ public abstract class ValueObject
     [SuppressMessage("ReSharper", "ConditionalAccessQualifierIsNonNullableAccordingToAPIContract")]
     public override int GetHashCode()
     {
-        var components = GetEqualityComponents().ToArray();
-        return components.Length switch
-        {
-            0 => 0,
-            1 => components[0]?.GetHashCode() ?? 0,
-            _ => HashCode.Combine(components)
-        };
+        var hash = new HashCode();
+        foreach (var component in GetEqualityComponents())
+            hash.Add(component);
+        return hash.ToHashCode();
     }
 
     /// <summary>
