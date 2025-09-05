@@ -1,0 +1,20 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+    
+  <ItemGroup>
+    <!-- Infrastructure -->
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
+    <!-- Web.Api -->
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="8.0.19" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <!-- ArchitectureTests -->
+    <PackageVersion Include="FluentAssertions" Version="8.6.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.6.0"/>
+    <PackageVersion   Include="NetArchTest.Rules" Version="1.3.2" />
+    <PackageVersion Include="xunit" Version="2.4.2"/>
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5"/>
+    <PackageVersion   Include="coverlet.collector" Version="6.0.0" />
+  </ItemGroup>
+</Project>
