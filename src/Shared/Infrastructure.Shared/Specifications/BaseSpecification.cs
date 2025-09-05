@@ -20,11 +20,11 @@ public abstract class BaseSpecification<T> : ISpecification<T>
     public int? Take { get; private set; }
     public int? Skip { get; private set; }
 
-    protected void AddInclude(Expression<Func<T, object>> include) => Includes.Add(include);
+    public void AddInclude(Expression<Func<T, object>> include) => Includes.Add(include);
     
-    protected void ApplyPaging(int skip, int take) { Skip = skip; Take = take; }
+    public void ApplyPaging(int skip, int take) { Skip = skip; Take = take; }
     
-    protected void ApplyOrderBy(Expression<Func<T, object>> orderByExpression) => OrderBy = orderByExpression;
+    public void ApplyOrderBy(Expression<Func<T, object>> orderByExpression) => OrderBy = orderByExpression;
     
-    protected void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression) => OrderByDescending = orderByDescendingExpression;
+    public void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression) => OrderByDescending = orderByDescendingExpression;
 }
