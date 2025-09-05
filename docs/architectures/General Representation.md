@@ -74,15 +74,6 @@ Enhances service quality and knowledge sharing.
 - Helpdesk Integration (ticketing systems like Zendesk)
 - Knowledge Base Management (FAQs, troubleshooting guides)
 
----
-
-## 🔗 Architecture Highlights
-
-- **Modular Design**: Each module can be extended or replaced independently.
-- **API-First Approach**: RESTful APIs enable seamless integration.
-- **Scalable Backend**: Built on microservices or cloud-native frameworks.
-- **Real-Time Processing**: Supports live updates via WebSockets or message queues.
-
 ## Visual Representation
 
 ![docs/images/GeneralRepresentation.jpg](https://raw.githubusercontent.com/Furqat-Abduvosiqov/BankingCrm_With_DDD/dev/docs/images/GeneralRepresentation.jpg)
