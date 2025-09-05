@@ -85,4 +85,4 @@ Enhances service quality and knowledge sharing.
 
 ## Visual Representation
 
-![GeneralRepresentation.jpg](docs/images/GeneralRepresentation.jpg)
+![docs/images/GeneralRepresentation.jpg](https://raw.githubusercontent.com/Furqat-Abduvosiqov/BankingCrm_With_DDD/dev/docs/images/GeneralRepresentation.jpg)
