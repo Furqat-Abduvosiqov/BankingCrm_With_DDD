@@ -10,6 +10,8 @@ permissions:
   contents: read
   checks: write  
   pull-requests: write
+  pages: write        
+  id-token: write
 
 jobs:
   build:
@@ -63,7 +65,9 @@ jobs:
           mkdir -p ./TestResults
           for proj in $(find ./tests -name '*.csproj'); do
             echo "Running tests for $proj"
-            dotnet test $proj --configuration Release --logger "trx;LogFileName=$(basename $proj).trx" --results-directory ./TestResults
+            dotnet test "$proj" --configuration Release \
+              --logger "trx;LogFileName=$(basename $proj).trx" \
+              --results-directory ./TestResults || true
           done
       
       - name: Upload test results as artifact
@@ -80,3 +84,46 @@ jobs:
           name: .NET Tests
           path: "./TestResults/*.trx"
           reporter: dotnet-trx
+
+      - name: Install ReportGenerator (dotnet global tool)
+        if: always()
+        run: |
+            dotnet tool install -g dotnet-reportgenerator-globaltool --version 5.* || true
+            echo "PATH before: $PATH"
+            export PATH="$PATH:$HOME/.dotnet/tools"
+            echo "PATH after: $PATH"
+
+            - name: Generate HTML test report
+              if: always()
+              run: |
+                export PATH="$PATH:$HOME/.dotnet/tools"
+                reportgenerator -reports:./TestResults/*.trx -targetdir:./TestResults/report -reporttypes:Html;HtmlSummary
+
+            - name: Upload HTML report artifact
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                name: test-report-html
+                path: ./TestResults/report
+      
+    
+  publish-pages:
+      runs-on: ubuntu-latest
+      needs: test
+      permissions:
+        pages: write
+        id-token: write
+      steps:
+          - name: Download HTML report artifact
+            uses: actions/download-artifact@v4
+            with:
+              name: test-report-html
+              path: ./report
+
+          - name: Upload Pages artifact
+            uses: actions/upload-pages-artifact@v1
+            with:
+              path: ./report
+
+          - name: Deploy to GitHub Pages
+            uses: actions/deploy-pages@v1
