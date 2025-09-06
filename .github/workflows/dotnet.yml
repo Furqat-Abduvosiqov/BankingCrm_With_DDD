@@ -33,7 +33,7 @@ jobs:
         run: dotnet build --no-restore --configuration Release
 
       - name: Publish artifacts
-        run: dotnet publish --no-build --configuration Release -o ./publish
+        run: dotnet publish src/BankingCrm.Customers/BankingCrm.Customers.API/BankingCrm.Customers.API.csproj -c Release -o ./publish
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -56,11 +56,11 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
         
-      - name: Build test projects
-        run: dotnet build **/*.Tests.csproj --configuration Release
+      - name: Build solution
+        run: dotnet build BankingCrm.sln --configuration Release
 
       - name: Run tests
-        run: dotnet test **/*.Tests.csproj --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory ./TestResults
+        run: dotnet test BankingCrm.sln --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory ./TestResults
            
       - name: Upload test results as artifact
         if: always()
