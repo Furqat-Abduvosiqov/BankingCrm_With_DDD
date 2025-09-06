@@ -88,23 +88,21 @@ jobs:
       - name: Install ReportGenerator (dotnet global tool)
         if: always()
         run: |
-            dotnet tool install -g dotnet-reportgenerator-globaltool --version 5.* || true
-            echo "PATH before: $PATH"
-            export PATH="$PATH:$HOME/.dotnet/tools"
-            echo "PATH after: $PATH"
+              dotnet tool install -g dotnet-reportgenerator-globaltool --version 5.* || true
+              export PATH="$PATH:$HOME/.dotnet/tools"
 
-            - name: Generate HTML test report
-              if: always()
-              run: |
-                export PATH="$PATH:$HOME/.dotnet/tools"
-                reportgenerator -reports:./TestResults/*.trx -targetdir:./TestResults/report -reporttypes:Html;HtmlSummary
+      - name: Generate HTML test report
+        if: always()
+        run: |
+          export PATH="$PATH:$HOME/.dotnet/tools"
+          reportgenerator -reports:./TestResults/*.trx -targetdir:./TestResults/report -reporttypes:Html;HtmlSummary
 
-            - name: Upload HTML report artifact
-              if: always()
-              uses: actions/upload-artifact@v4
-              with:
-                name: test-report-html
-                path: ./TestResults/report
+      - name: Upload HTML report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report-html
+          path: ./TestResults/report
       
     
   publish-pages:
