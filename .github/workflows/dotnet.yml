@@ -66,8 +66,10 @@ jobs:
 
       - name: Run tests per project
         run: |
+          mkdir -p ./TestResults
           for proj in $(find ./tests -name '*.csproj'); do
-            dotnet test $proj --no-build --configuration Release --logger "trx;LogFileName=$(basename $proj).trx" --results-directory ./TestResults
+          echo "Running tests for $proj"
+          dotnet test $proj --no-build --configuration Release --logger "trx;LogFileName=$(basename $proj).trx" --results-directory ./TestResults
           done
       
       - name: Upload test results as artifact
