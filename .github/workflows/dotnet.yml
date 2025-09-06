@@ -95,7 +95,7 @@ jobs:
         if: always()
         run: |
           export PATH="$PATH:$HOME/.dotnet/tools"
-          reportgenerator -reports:./TestResults/*.trx -targetdir:./TestResults/report -reporttypes:Html;HtmlSummary
+          reportgenerator -reports:./TestResults/*.trx -targetdir:./TestResults/report -reporttypes:"Html;HtmlSummary"
 
       - name: Upload HTML report artifact
         if: always()
