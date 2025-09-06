@@ -18,15 +18,21 @@ public static class SpecificationEvaluator<T> where T : class
         
         if (specification.CursorSelector != null && !string.IsNullOrEmpty(specification.Cursor))
         {
-            // Convert cursor string into actual value
-            var cursorValue = Convert.ChangeType(specification.Cursor, typeof(object));
+            var param = specification.CursorSelector.Parameters.First();
+            var body = specification.CursorSelector.Body;
 
-            var parameter = Expression.Parameter(typeof(T), "x");
-            var member = Expression.Invoke(specification.CursorSelector, parameter);
-            var constant = Expression.Constant(cursorValue);
-            var comparison = Expression.GreaterThan(member, constant);
-            var lambda = Expression.Lambda<Func<T, bool>>(comparison, parameter);
+            // Handle boxing of value types (remove Convert expression if present)
+            if (body.NodeType == ExpressionType.Convert && body is UnaryExpression unary)
+                body = unary.Operand;
 
+            // Parse cursor string into the property type
+            var memberType = ((MemberExpression)body).Type;
+            var typedValue = Convert.ChangeType(specification.Cursor, memberType);
+
+            var constant = Expression.Constant(typedValue, memberType);
+            var greaterThan = Expression.GreaterThan(body, constant);
+
+            var lambda = Expression.Lambda<Func<T, bool>>(greaterThan, param);
             query = query.Where(lambda);
         }
 

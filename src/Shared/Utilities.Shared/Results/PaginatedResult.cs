@@ -19,7 +19,13 @@ public sealed class PaginatedResult<T>
         int pageSize,
         int totalCount)
     {
-        var metadata = new OffsetPaginationMetadata(pageNumber, pageSize, totalCount);
+        if (pageSize <= 0)
+            throw new ArgumentOutOfRangeException(nameof(pageSize), "Page size must be greater than zero.");
+        if (pageNumber <= 0)
+            throw new ArgumentOutOfRangeException(nameof(pageNumber), "Page number must be greater than zero.");
+
+        var metadata = new OffsetPaginationMetadata(pageNumber,pageSize, totalCount);
+
         return new PaginatedResult<T>(items, metadata);
     }
 
@@ -30,6 +36,11 @@ public sealed class PaginatedResult<T>
         string? previousCursor,
         string? nextCursor)
     {
+        if (pageSize <= 0)
+            throw new ArgumentOutOfRangeException(nameof(pageSize), "Page size must be greater than zero.");
+        if (totalCount <= 0)
+            throw new ArgumentOutOfRangeException(nameof(totalCount), "Total count must be greater than zero.");
+        
         var metadata = new CursorPaginationMetadata(pageSize, totalCount, previousCursor, nextCursor);
         return new PaginatedResult<T>(items, metadata);
     }

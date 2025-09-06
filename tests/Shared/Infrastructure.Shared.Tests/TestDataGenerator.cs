@@ -49,13 +49,22 @@ public abstract class TestDataGenerator
     }
 
     /// <summary>
-    /// A spec with paging
+    /// A spec with offset pagination
     /// </summary>
-    public class PagingSpecification : BaseSpecification<Customer>
+    public class OffsetPaginationSpecification : BaseSpecification<Customer>
     {
-        public PagingSpecification(int skip, int take)
+        public OffsetPaginationSpecification(int skip, int take)
         {
             ApplyOffsetPagination(skip, take);
+        }
+    }
+    
+    public class CursorPaginationSpecification : BaseSpecification<Customer>
+    {
+        public CursorPaginationSpecification(string? cursor, int take)
+        {
+            ApplyOrderBy(x => x.Id);
+            ApplyCursorPagination(x => x.Id, cursor, take);
         }
     }
     
