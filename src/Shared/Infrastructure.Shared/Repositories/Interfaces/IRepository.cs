@@ -1,4 +1,5 @@
-﻿using Domain.Shared.Entities;
+﻿using System.Linq.Expressions;
+using Domain.Shared.Entities;
 using Domain.Shared.ValueObjects;
 using Infrastructure.Shared.Specifications;
 using Utilities.Shared.Results;
@@ -18,4 +19,7 @@ public interface IRepository<T> where T : Entity
     Task<T> AddAsync(T entity, CancellationToken cancellationToken = default);
     Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
     Task DeleteAsync(T entity, CancellationToken cancellationToken = default);
+    
+    Task<bool> AnyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
+    Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null, CancellationToken cancellationToken = default);
 }

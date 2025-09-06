@@ -1,4 +1,5 @@
-﻿using Domain.Shared.Entities;
+﻿using System.Linq.Expressions;
+using Domain.Shared.Entities;
 using Domain.Shared.ValueObjects;
 using Infrastructure.Shared.Repositories.Interfaces;
 using Infrastructure.Shared.Specifications;
@@ -45,6 +46,15 @@ public class EfRepository<T> : IRepository<T> where T : Entity
         _dbContext.Set<T>().Remove(entity);
         return Task.CompletedTask;
     }
+
+    public Task<bool> AnyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
+        => _dbContext.Set<T>().AnyAsync(predicate, cancellationToken);
+    
+
+    public Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null, CancellationToken cancellationToken = default)
+        => predicate is null 
+        ? _dbContext.Set<T>().CountAsync(cancellationToken) 
+        : _dbContext.Set<T>().CountAsync(predicate, cancellationToken);
 
     private IQueryable<T> ApplySpecification(ISpecification<T> spec) =>
         SpecificationEvaluator<T>.GetQuery(_dbContext.Set<T>().AsQueryable(), spec);
