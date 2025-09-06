@@ -55,17 +55,12 @@ jobs:
 
       - name: Restore dependencies
         run: dotnet restore
+        
+      - name: Build test projects
+        run: dotnet build ./tests --configuration Release
 
-      - name: Run tests (per project)
-        run: |
-          results_dir=$(pwd)/TestResults
-          mkdir -p $results_dir
-          for proj in $(find ./tests -type f -name "*.csproj"); do
-            echo "Running tests for $proj"
-            dotnet test "$proj" --no-build --configuration Release \
-              --logger "trx;LogFileName=$(basename $proj)-results.trx" \
-              --results-directory $results_dir || true
-          done
+      - name: Run tests
+        run: dotnet test --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory ./TestResults
 
       - name: Upload test results as artifact
         if: always()
