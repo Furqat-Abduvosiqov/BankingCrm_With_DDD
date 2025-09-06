@@ -51,12 +51,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E35B76E7-C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "architectures", "architectures", "{2783C245-81E5-4E92-B3CB-33127ECC8D2A}"
 	ProjectSection(SolutionItems) = preProject
-		docs\architectures\Core Functionality.md = docs\architectures\Core Functionality.md
+		docs\architectures\General Representation.md = docs\architectures\General Representation.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{08181912-1C76-42EB-8DBB-6DB2C5BAA017}"
 	ProjectSection(SolutionItems) = preProject
-		docs\images\CoreFunctionality.png = docs\images\CoreFunctionality.png
+		docs\images\GeneralRepresentation.jpg = docs\images\GeneralRepresentation.jpg
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7041E3C1-E5AE-4A64-8F57-215CA156B86A}"
