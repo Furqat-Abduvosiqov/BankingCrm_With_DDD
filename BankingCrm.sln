@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Shared", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities.Shared", "src\Shared\Utilities.Shared\Utilities.Shared.csproj", "{A14CF9C2-7AEA-44CC-BF23-866C6963B558}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Architecture.Tests", "tests\BankingCrm.Customers\Architecture.Tests.csproj", "{AC3E9E18-08B6-43DD-8DFC-168F25766C94}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingCrm.Customers.Architecture.Tests", "tests\BankingCrm.Customers\BankingCrm.Customers.Architecture.Tests.csproj", "{AC3E9E18-08B6-43DD-8DFC-168F25766C94}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6B65E612-2A00-4F8C-BD99-C56B568D1DB7}"
 EndProject

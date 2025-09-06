@@ -1,4 +1,4 @@
-﻿namespace Architecture.Tests.Layers;
+﻿namespace BankingCrm.Customers.Architecture.Tests.Layers;
 
 public class LayerTests: BaseTest
 {

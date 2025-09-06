@@ -1,4 +1,4 @@
-﻿namespace Architecture.Tests;
+﻿namespace BankingCrm.Customers.Architecture.Tests;
 
 public abstract class BaseTest
 {
