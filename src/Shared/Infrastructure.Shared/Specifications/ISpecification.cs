@@ -10,4 +10,7 @@ public interface ISpecification<T>
     Expression<Func<T, object>>? OrderByDescending { get; }
     int? Take { get; }
     int? Skip { get; }
+    
+    string? Cursor { get; }
+    Expression<Func<T, object>>? CursorSelector { get; }
 }

@@ -55,7 +55,7 @@ public abstract class TestDataGenerator
     {
         public PagingSpecification(int skip, int take)
         {
-            ApplyPaging(skip, take);
+            ApplyOffsetPagination(skip, take);
         }
     }
     

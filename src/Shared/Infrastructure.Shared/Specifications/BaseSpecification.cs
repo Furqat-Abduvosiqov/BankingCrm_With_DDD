@@ -19,12 +19,23 @@ public abstract class BaseSpecification<T> : ISpecification<T>
     public Expression<Func<T, object>>? OrderByDescending { get; private set; }
     public int? Take { get; private set; }
     public int? Skip { get; private set; }
+    
+    public string? Cursor { get; private set; }
+    
+    public Expression<Func<T, object>>? CursorSelector { get; private set; }
 
     public void AddInclude(Expression<Func<T, object>> include) => Includes.Add(include);
     
-    public void ApplyPaging(int skip, int take) { Skip = skip; Take = take; }
+    public void ApplyOffsetPagination(int skip, int take) { Skip = skip; Take = take; }
     
     public void ApplyOrderBy(Expression<Func<T, object>> orderByExpression) => OrderBy = orderByExpression;
     
     public void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression) => OrderByDescending = orderByDescendingExpression;
+    
+    public void ApplyCursorPagination(Expression<Func<T, object>> cursorSelector, string? cursor, int take)
+    {
+        CursorSelector = cursorSelector;
+        Cursor = cursor;
+        Take = take;
+    }
 }

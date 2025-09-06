@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Shared.Specifications;
 
@@ -14,6 +15,20 @@ public static class SpecificationEvaluator<T> where T : class
 
         if (specification.Criteria != null)
             query = query.Where(specification.Criteria);
+        
+        if (specification.CursorSelector != null && !string.IsNullOrEmpty(specification.Cursor))
+        {
+            // Convert cursor string into actual value
+            var cursorValue = Convert.ChangeType(specification.Cursor, typeof(object));
+
+            var parameter = Expression.Parameter(typeof(T), "x");
+            var member = Expression.Invoke(specification.CursorSelector, parameter);
+            var constant = Expression.Constant(cursorValue);
+            var comparison = Expression.GreaterThan(member, constant);
+            var lambda = Expression.Lambda<Func<T, bool>>(comparison, parameter);
+
+            query = query.Where(lambda);
+        }
 
         if (specification.OrderBy != null)
             query = query.OrderBy(specification.OrderBy);
