@@ -33,28 +33,27 @@ public abstract class Entity
     #region Equality
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj is null || obj.GetType() != GetType()) return false;
+        if (ReferenceEquals(this, obj)) 
+            return true;
+        
+        if (obj is null || obj.GetType() != GetType()) 
+            return false;
 
         var other = (Entity)obj;
 
-        if (Id.Equals(default) || other.Id.Equals(default))
+        if (Id.Equals(default) || other.Id.Equals(default)) 
             return false;
 
         return Id.Equals(other.Id);
     }
 
     [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
-    public override int GetHashCode() =>
-        HashCode.Combine(GetRealType(), Id);
+    public override int GetHashCode() => HashCode.Combine(GetRealType(), Id);
 
-    private Type GetRealType() =>
-        GetType().IsGenericType ? GetType().BaseType! : GetType();
+    private Type GetRealType() => GetType().IsGenericType ? GetType().BaseType! : GetType();
 
-    public static bool operator ==(Entity? left, Entity? right) =>
-        Equals(left, right);
+    public static bool operator ==(Entity? left, Entity? right) => Equals(left, right);
 
-    public static bool operator !=(Entity? left, Entity? right) =>
-        !Equals(left, right);
+    public static bool operator !=(Entity? left, Entity? right) => !Equals(left, right);
     #endregion
 }
