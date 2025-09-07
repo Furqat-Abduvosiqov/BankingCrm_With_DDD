@@ -1,5 +1,5 @@
-using Infrastructure.Shared.Repositories;
 using Infrastructure.Shared.Specifications;
+using Infrastructure.Shared.Specifications.Interfaces;
 
 namespace Infrastructure.Shared.Tests;
 
@@ -15,67 +15,42 @@ public abstract class TestDataGenerator
         public int Age { get; set; }
     }
     
-    /// <summary>
-    ///  A spec with criteria
-    /// </summary>
-    public class CustomerByNameSpecification : BaseSpecification<Customer>
-    {
-        public CustomerByNameSpecification(string name)
-            : base(c => c.Name == name)
-        {
-        }
-    }
+    public static ISpecification<Customer> CustomerByNameSpecification(string name) =>
+        Specification<Customer>
+            .Create()
+            .Where(c => c.Name == name)
+            .Build();
 
-    /// <summary>
-    /// A spec with ordering
-    /// </summary>
-    public class OrderByAgeSpecification : BaseSpecification<Customer>
-    {
-        public OrderByAgeSpecification()
-        {
-            ApplyOrderBy(c => c.Age);
-        }
-    }
+    public static ISpecification<Customer> OrderByAgeSpecification() =>
+        Specification<Customer>
+            .Create()
+            .OrderBy(c => c.Age)
+            .Build();
 
-    /// <summary>
-    ///  A spec with descending ordering
-    /// </summary>
-    public class OrderByAgeDescendingSpecification : BaseSpecification<Customer>
-    {
-        public OrderByAgeDescendingSpecification()
-        {
-            ApplyOrderByDescending(c => c.Age);
-        }
-    }
+    public static ISpecification<Customer> OrderByAgeDescendingSpecification() =>
+        Specification<Customer>
+            .Create()
+            .OrderByDescending(c => c.Age)
+            .Build();
 
-    /// <summary>
-    /// A spec with offset pagination
-    /// </summary>
-    public class OffsetPaginationSpecification : BaseSpecification<Customer>
-    {
-        public OffsetPaginationSpecification(int skip, int take)
-        {
-            ApplyOffsetPagination(skip, take);
-        }
-    }
-    
-    public class CursorPaginationSpecification : BaseSpecification<Customer>
-    {
-        public CursorPaginationSpecification(string? cursor, int take)
-        {
-            ApplyOrderBy(x => x.Id);
-            ApplyCursorPagination(x => x.Id, cursor, take);
-        }
-    }
-    
-    /// <summary>
-    /// A spec with include (fake include just to check it is stored)
-    /// </summary>
-    public class IncludeSpecification : BaseSpecification<Customer>
-    {
-        public IncludeSpecification()
-        {
-            AddInclude(c => c.Name); // Normally would be a navigation property
-        }
-    }
+    public static ISpecification<Customer> OffsetPaginationSpecification(int skip, int take) =>
+        Specification<Customer>
+            .Create()
+            .Skip(skip)
+            .Take(take)
+            .Build();
+
+    public static ISpecification<Customer> CursorPaginationSpecification(string? cursor, int take) =>
+        Specification<Customer>
+            .Create()
+            .OrderBy(x => x.Id)
+            .WithCursor(cursor, x => x.Id)
+            .Take(take)
+            .Build();
+
+    public static ISpecification<Customer> IncludeSpecification() =>
+        Specification<Customer>
+            .Create()
+            .Include(c => c.Name)
+            .Build();
 }
