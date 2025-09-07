@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Infrastructure.Shared.Specifications;
+using Infrastructure.Shared.Specifications.Interfaces;
 
 namespace Infrastructure.Shared.Tests.Specifications;
 
@@ -14,12 +15,14 @@ public class SpecificationTests : TestDataGenerator
         new Customer { Id = 5, Name = "John", Age = 29 },
         new Customer { Id = 6, Name = "Barry", Age = 31 },
     };
+    
+    private readonly ISpecificationEvaluator<Customer> _evaluator = new SpecificationEvaluator<Customer>();
 
     [Fact]
     public void Criteria_Should_Filter_Customers_By_Name()
     {
-        var spec = new CustomerByNameSpecification("Alice");
-        var query = SpecificationEvaluator<Customer>.GetQuery(_customers.AsQueryable(), spec);
+        var spec = CustomerByNameSpecification("Alice");
+        var query = _evaluator.GetQuery(_customers.AsQueryable(), spec);
 
         query.AsEnumerable().Should().ContainSingle(c => c.Name == "Alice");
     }
@@ -27,8 +30,8 @@ public class SpecificationTests : TestDataGenerator
     [Fact]
     public void ApplyOrderBy_Should_Order_By_Age()
     {
-        var spec = new OrderByAgeSpecification();
-        var query = SpecificationEvaluator<Customer>.GetQuery(_customers.AsQueryable(), spec);
+        var spec = OrderByAgeSpecification();
+        var query = _evaluator.GetQuery(_customers.AsQueryable(), spec);
 
         query.Select(c => c.Age).AsEnumerable().Should().BeInAscendingOrder();
     }
@@ -36,8 +39,8 @@ public class SpecificationTests : TestDataGenerator
     [Fact]
     public void ApplyOrderByDescending_Should_Order_By_Age()
     {
-        var spec = new OrderByAgeDescendingSpecification();
-        var query = SpecificationEvaluator<Customer>.GetQuery(_customers.AsQueryable(), spec);
+        var spec = OrderByAgeDescendingSpecification();
+        var query = _evaluator.GetQuery(_customers.AsQueryable(), spec);
 
         query.Select(c => c.Age).AsEnumerable().Should().BeInDescendingOrder();
     }
@@ -45,8 +48,8 @@ public class SpecificationTests : TestDataGenerator
     [Fact]
     public void ApplyOffsetPagination_Should_Skip_And_Take()
     {
-        var spec = new OffsetPaginationSpecification(1, 1);
-        var query = SpecificationEvaluator<Customer>.GetQuery(_customers.AsQueryable(), spec);
+        var spec = OffsetPaginationSpecification(1, 1);
+        var query = _evaluator.GetQuery(_customers.AsQueryable(), spec);
 
         query.AsEnumerable().Should().ContainSingle().Which.Name.Should().Be("Bob");
     }
@@ -54,10 +57,10 @@ public class SpecificationTests : TestDataGenerator
     [Fact]
     public void CursorSpec_ShouldReturnItemsAfterCursor()
     {
-        var spec = new CursorPaginationSpecification(cursor: "5", take: 3);
+        var spec = CursorPaginationSpecification(cursor: "5", take: 3);
 
         // Act
-        var result = SpecificationEvaluator<Customer>.GetQuery(_customers.AsQueryable(), spec);
+        var result = _evaluator.GetQuery(_customers.AsQueryable(), spec);
 
         // Assert
         result.AsEnumerable().Should().HaveCount(1);
@@ -67,7 +70,7 @@ public class SpecificationTests : TestDataGenerator
     [Fact]
     public void AddInclude_Should_Add_To_Includes()
     {
-        var spec = new IncludeSpecification();
+        var spec = IncludeSpecification();
 
         spec.Includes.Should().ContainSingle();
     }
@@ -75,15 +78,18 @@ public class SpecificationTests : TestDataGenerator
     [Fact]
     public void Multiple_Specifications_Should_Compose_Correctly()
     {
-        var spec = new OffsetPaginationSpecification(0, 2);
-        spec.ApplyOrderByDescending(c => c.Age);
+        var spec = Specification<Customer>
+            .Create()
+            .Take(2)
+            .OrderByDescending(c => c.Age)
+            .Build();
 
-        var query = SpecificationEvaluator<Customer>.GetQuery(_customers.AsQueryable(), spec);
+        var query = _evaluator.GetQuery(_customers.AsQueryable(), spec);
 
         var result = query.ToList();
 
         result.Should().HaveCount(2);
-        result.First().Name.Should().Be("Barry");  
-        result.Last().Name.Should().Be("Bob");
+        result.First().Name.Should().Be("Barry"); // Age 31
+        result.Last().Name.Should().Be("Bob");   // Age 30
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Infrastructure.Shared.Specifications;
+namespace Infrastructure.Shared.Specifications.Interfaces;
 
 public interface ISpecification<T>
 {

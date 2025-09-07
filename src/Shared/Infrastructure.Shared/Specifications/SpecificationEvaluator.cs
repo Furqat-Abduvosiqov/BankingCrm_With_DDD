@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Infrastructure.Shared.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Shared.Specifications;
@@ -7,44 +8,27 @@ namespace Infrastructure.Shared.Specifications;
 /// Provides functionality to evaluate and apply specifications to an <see cref="IQueryable{T}"/> sequence,
 /// including filtering, sorting, paging, and eager loading of related entities.
 /// </summary>
-public static class SpecificationEvaluator<T> where T : class
+public class SpecificationEvaluator<T> : ISpecificationEvaluator<T> where T : class
 {
-    public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
+    public virtual IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
     {
         var query = inputQuery;
 
         if (specification.Criteria != null)
             query = query.Where(specification.Criteria);
-        
+
         if (specification.CursorSelector != null && !string.IsNullOrEmpty(specification.Cursor))
         {
-            var param = specification.CursorSelector.Parameters.First();
-            var body = specification.CursorSelector.Body;
-
-            // Handle boxing of value types (remove Convert expression if present)
-            if (body.NodeType == ExpressionType.Convert && body is UnaryExpression unary)
-                body = unary.Operand;
-
-            // Parse cursor string into the property type
-            var memberType = ((MemberExpression)body).Type;
-            var typedValue = Convert.ChangeType(specification.Cursor, memberType);
-
-            var constant = Expression.Constant(typedValue, memberType);
-            var greaterThan = Expression.GreaterThan(body, constant);
-
-            var lambda = Expression.Lambda<Func<T, bool>>(greaterThan, param);
-            query = query.Where(lambda);
+            query = ApplyCursorFilter(query, specification.CursorSelector, specification.Cursor);
         }
 
         if (specification.OrderBy != null)
             query = query.OrderBy(specification.OrderBy);
-
-        if (specification.OrderByDescending != null)
+        else if (specification.OrderByDescending != null)
             query = query.OrderByDescending(specification.OrderByDescending);
 
         if (specification.Skip.HasValue)
             query = query.Skip(specification.Skip.Value);
-
         if (specification.Take.HasValue)
             query = query.Take(specification.Take.Value);
 
@@ -52,5 +36,28 @@ public static class SpecificationEvaluator<T> where T : class
             .Aggregate(query, (current, include) => current.Include(include));
 
         return query;
+    }
+
+    protected virtual IQueryable<T> ApplyCursorFilter(
+        IQueryable<T> query,
+        Expression<Func<T, object>> cursorSelector,
+        string cursor)
+    {
+        var param = cursorSelector.Parameters.First();
+        var body = cursorSelector.Body;
+
+        if (body is UnaryExpression { NodeType: ExpressionType.Convert } unary)
+            body = unary.Operand;
+
+        if (body is not MemberExpression memberExpr)
+            throw new ArgumentException("Cursor selector must target a member.");
+
+        var memberType = memberExpr.Type;
+        var typedValue = Convert.ChangeType(cursor, memberType);
+        var constant = Expression.Constant(typedValue, memberType);
+        var greaterThan = Expression.GreaterThan(body, constant);
+        var lambda = Expression.Lambda<Func<T, bool>>(greaterThan, param);
+
+        return query.Where(lambda);
     }
 }
