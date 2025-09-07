@@ -9,6 +9,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Events;
+using Serilog.Exceptions;
 using Utilities.Shared.Logging.AspNet;
 using Utilities.Shared.Logging.HttpClient;
 using Utilities.Shared.Logging.Interfaces;
@@ -35,8 +36,10 @@ public static class LoggingSetup
             .Enrich.FromLogContext()
             .Enrich.WithMachineName()
             .Enrich.WithThreadId()
+            .Enrich.WithEnvironmentName()
+            .Enrich.WithExceptionDetails()
             .WriteTo.Console()
-            .WriteTo.Seq(configuration["Seq:Url"] ?? "http://localhost:5341")
+            .WriteTo.Seq(configuration["Logging:SeqUrl"] ?? "http://localhost:5341")
             .CreateLogger();
 
         services.AddSingleton<IHttpLogger, SerilogHttpLogger>();
@@ -57,19 +60,19 @@ public static class LoggingSetup
                 .AddSource("Logging")
                 .AddOtlpExporter(options =>
                 {
-                    options.Endpoint = new Uri(configuration["Otlp:Endpoint"] ?? "http://localhost:4317");
+                    options.Endpoint = new Uri(configuration["Telemetry:OtlpEndpoint"] ?? "http://localhost:4317");
                 }))
             .WithMetrics(metrics => metrics
                 .AddAspNetCoreInstrumentation()
                 .AddHttpClientInstrumentation()
+                .AddSqlClientInstrumentation()
                 .AddOtlpExporter(options =>
                 {
-                    options.Endpoint = new Uri(configuration["Otlp:Endpoint"] ?? "http://localhost:4317");
+                    options.Endpoint = new Uri(configuration["Telemetry:OtlpEndpoint"] ?? "http://localhost:4317");
                 }));
-
+        
         services.AddLogging(builder =>
         {
-            builder.ClearProviders();
             builder.AddOpenTelemetry(logging =>
             {
                 logging.IncludeFormattedMessage = true;
@@ -77,7 +80,7 @@ public static class LoggingSetup
                 logging.ParseStateValues = true;
                 logging.AddOtlpExporter(options =>
                 {
-                    options.Endpoint = new Uri(configuration["Otlp:Endpoint"] ?? "http://localhost:4317");
+                    options.Endpoint = new Uri(configuration["Telemetry:OtlpEndpoint"] ?? "http://localhost:4317");
                 });
             });
         });
@@ -86,16 +89,10 @@ public static class LoggingSetup
     }
     
     /// <summary>
-    /// 
+    /// Adds ASP.NET + HttpClient logging with redaction and enrichment policies.
     /// </summary>
-    /// <param name="services"></param>
-    /// <param name="serviceName"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static IServiceCollection RegisterLoggingServices(this IServiceCollection services, string serviceName = "my-service")
+    public static IServiceCollection AddHttpLoggingWithPolicies(this IServiceCollection services, string serviceName = "")
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
-
         // Core: redactor/policy implementations
         services.AddSingleton<IRedactor, DefaultRedactionPolicy>();
         services.AddSingleton<ILogPolicy, DefaultRedactionPolicy>();
@@ -104,24 +101,16 @@ public static class LoggingSetup
         services.AddSingleton<IEnricher>(sp =>
             new ContentBasedEnricher(serviceName, sp.GetService<IHttpContextAccessor>()));
 
-        // Logging adapter - implement IHttpLogger with Serilog adapter or your own
-        services.AddSingleton<IHttpLogger, SerilogHttpLogger>();
+        // ASP.NET built-in HttpLogging
+        services.AddHttpLogging(HttpLoggingOptionsFactory.ConfigureDefaults);
 
-        // ASP.NET built-in HttpLogging - add options but keep interceptor for deeper logic
-        services.AddHttpLogging(options =>
-        {
-            // Basic fields; interceptor will apply suppression/redaction
-            HttpLoggingOptions defaults = options;
-            HttpLoggingOptionsFactory.ConfigureDefaults(defaults);
-        });
-
-        // Add the interceptor to be used by AddHttpLogging
+        // Add interceptor for custom policies
         services.AddSingleton<IHttpLoggingInterceptor, HttpLoggingInterceptor>();
 
-        // register the HttpClient delegating handler
+        // HttpClient delegating handler
         services.AddTransient<LoggingDelegatingHandler>();
 
-        // It's often useful to add IHttpContextAccessor for enrichers
+        // IHttpContextAccessor is needed for enrichers
         services.AddHttpContextAccessor();
 
         return services;

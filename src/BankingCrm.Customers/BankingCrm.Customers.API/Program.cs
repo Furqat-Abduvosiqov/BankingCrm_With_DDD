@@ -1,7 +1,11 @@
+using Utilities.Shared.Logging.Config;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSerilogLogging(builder.Configuration); 
 
 var app = builder.Build();
 
