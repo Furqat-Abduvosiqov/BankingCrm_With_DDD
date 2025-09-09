@@ -1,6 +1,6 @@
-﻿using FluentAssertions;
+﻿using Application.Shared.Interfaces.Specifications;
+using FluentAssertions;
 using Infrastructure.Shared.Specifications;
-using Infrastructure.Shared.Specifications.Interfaces;
 
 namespace Infrastructure.Shared.Tests.Specifications;
 

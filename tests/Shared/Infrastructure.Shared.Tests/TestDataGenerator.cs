@@ -1,5 +1,6 @@
+using Application.Shared.Interfaces.Specifications;
 using Infrastructure.Shared.Specifications;
-using Infrastructure.Shared.Specifications.Interfaces;
+
 
 namespace Infrastructure.Shared.Tests;
 

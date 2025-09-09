@@ -1,9 +1,8 @@
-﻿using Domain.Shared.Entities;
-using Infrastructure.Shared.Specifications;
-using Infrastructure.Shared.Specifications.Interfaces;
+﻿using Application.Shared.Interfaces.Specifications;
+using Domain.Shared.Entities;
 using Utilities.Shared.Results;
 
-namespace Infrastructure.Shared.Repositories.Interfaces;
+namespace Application.Shared.Interfaces.Repositories;
 
 /// <summary>
 /// 

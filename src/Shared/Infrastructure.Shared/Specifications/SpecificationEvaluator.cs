@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using Infrastructure.Shared.Specifications.Interfaces;
+using Application.Shared.Interfaces.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Shared.Specifications;

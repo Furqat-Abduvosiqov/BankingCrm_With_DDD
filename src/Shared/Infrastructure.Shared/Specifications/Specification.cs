@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
-using Infrastructure.Shared.Specifications.Interfaces;
+using Application.Shared.Interfaces.Specifications;
+
 
 namespace Infrastructure.Shared.Specifications;
 
@@ -99,15 +100,24 @@ public class Specification<T> : ISpecification<T>
             return this;
         }
 
-        public ISpecification<TItem> Build() => new Specification<TItem>(
-            _criteria,
-            _includes,
-            _orderBy,
-            _orderByDescending,
-            _take,
-            _skip,
-            _cursor,
-            _cursorSelector);
+        public ISpecification<TItem> Build()
+        {
+            if (!string.IsNullOrEmpty(_cursor) && _cursorSelector is null)
+                throw new InvalidOperationException("CursorSelector is required when Cursor is specified.");
+
+            if (_orderBy is not null && _orderByDescending is not null)
+                throw new InvalidOperationException("Cannot specify both OrderBy and OrderByDescending.");
+            
+            return new Specification<TItem>(
+                        _criteria,
+                        _includes,
+                        _orderBy,
+                        _orderByDescending,
+                        _take,
+                        _skip,
+                        _cursor,
+                        _cursorSelector);
+        } 
     }
     #endregion
 }

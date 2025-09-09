@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Shared.Repositories.Interfaces;
+﻿namespace Application.Shared.Interfaces.Repositories;
 
 public interface IUnitOfWork
 {

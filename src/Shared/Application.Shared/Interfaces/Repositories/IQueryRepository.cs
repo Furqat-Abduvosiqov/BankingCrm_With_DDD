@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Domain.Shared.Entities;
 
-namespace Infrastructure.Shared.Repositories.Interfaces;
+namespace Application.Shared.Interfaces.Repositories;
 
 /// <summary>
 /// 

@@ -1,9 +1,8 @@
-﻿using Domain.Shared.Entities;
+﻿using Application.Shared.Interfaces.Specifications;
+using Domain.Shared.Entities;
 using Domain.Shared.ValueObjects;
-using Infrastructure.Shared.Specifications;
-using Infrastructure.Shared.Specifications.Interfaces;
 
-namespace Infrastructure.Shared.Repositories.Interfaces;
+namespace Application.Shared.Interfaces.Repositories;
 
 /// <summary>
 /// Represent interface for read operations

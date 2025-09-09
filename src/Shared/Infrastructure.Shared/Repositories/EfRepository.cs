@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
+using Application.Shared.Interfaces.Repositories;
+using Application.Shared.Interfaces.Specifications;
 using Domain.Shared.Entities;
 using Domain.Shared.ValueObjects;
 using Infrastructure.Shared.Paginations;
-using Infrastructure.Shared.Repositories.Interfaces;
-using Infrastructure.Shared.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Utilities.Shared.Results;
 

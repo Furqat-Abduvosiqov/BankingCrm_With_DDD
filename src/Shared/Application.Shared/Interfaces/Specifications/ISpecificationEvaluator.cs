@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Shared.Specifications.Interfaces;
+﻿namespace Application.Shared.Interfaces.Specifications;
 
 public interface ISpecificationEvaluator<T> where T : class
 {
