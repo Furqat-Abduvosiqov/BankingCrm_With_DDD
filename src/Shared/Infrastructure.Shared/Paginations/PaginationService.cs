@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+using Application.Shared.Interfaces.Paginations;
 using Domain.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 using Utilities.Shared.Results;

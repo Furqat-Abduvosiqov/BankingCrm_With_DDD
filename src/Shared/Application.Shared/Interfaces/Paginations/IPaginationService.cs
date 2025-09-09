@@ -2,7 +2,7 @@
 using Domain.Shared.Entities;
 using Utilities.Shared.Results;
 
-namespace Infrastructure.Shared.Paginations;
+namespace Application.Shared.Interfaces.Paginations;
 
 public interface IPaginationService<T> where T : Entity
 {
