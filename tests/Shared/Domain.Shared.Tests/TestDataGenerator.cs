@@ -1,6 +1,7 @@
 ﻿using Domain.Shared.Entities;
 using Domain.Shared.Events;
 using Domain.Shared.ValueObjects;
+#pragma warning disable CS8714 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'notnull' constraint.
 
 namespace Domain.Shared.Tests;
 
@@ -12,9 +13,18 @@ public abstract class TestDataGenerator
     /// <summary>
     /// Concrete implementation of EntityId for testing purposes.
     /// </summary>
-    public sealed class OrderId : EntityId<OrderId>
+    public class OrderId : EntityId<int>
     {
-        public OrderId(Guid value) : base(value) { }
+        public OrderId() { }
+
+        public OrderId(int value) : base(value) { }
+
+        public static OrderId New(int value) => Create<OrderId>(value);
+    }
+
+    public class TestId<TValue> : EntityId<TValue>
+    {
+        public TestId(TValue value) : base(value) { }
     }
     
     /// <summary>

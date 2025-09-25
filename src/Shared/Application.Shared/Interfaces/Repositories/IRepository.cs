@@ -5,8 +5,10 @@ namespace Application.Shared.Interfaces.Repositories;
 /// <summary>
 /// Composite interface for convenience
 /// </summary>
-/// <typeparam name="T">Represent Entity object</typeparam>
-public interface IRepository<T> : IReadRepository<T>, IWriteRepository<T>, IQueryRepository<T>, IPaginatedRepository<T>
-    where T : Entity
+/// <typeparam name="TEntity">Represent Entity object</typeparam>
+/// <typeparam name="TId">Represent Identification field of Entity</typeparam>
+public interface IRepository<TEntity,TId> : IReadRepository<TEntity,TId>, IWriteRepository<TEntity>, IQueryRepository<TEntity>, IPaginatedRepository<TEntity>
+    where TEntity : Entity
+    where TId : notnull
 {
 }

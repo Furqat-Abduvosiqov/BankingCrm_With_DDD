@@ -2,16 +2,27 @@
 
 /// <summary>
 /// Strongly-typed identifier for entities.
-/// Prevents primitive obsession with raw GUIDs.
+/// Prevents primitive obsession with raw values.
 /// </summary>
-public abstract class EntityId : ValueObject
+public abstract class EntityId<TValue> : ValueObject
+    where TValue : notnull
 {
-    public Guid Value { get; }
+    public TValue Value { get; private set; } = default!;
+    
+    protected EntityId() { }
 
-    protected EntityId(Guid value)
+    protected EntityId(TValue value)
     {
-        if (value == Guid.Empty)
-            throw new ArgumentException("ID cannot be empty.", nameof(value));
+        SetValue(value);
+    }
+    
+    protected void SetValue(TValue value)
+    {
+        if (IsDefault(value))
+            throw new ArgumentException("ID cannot be default/empty.", nameof(value));
+
+        if (!EqualityComparer<TValue>.Default.Equals(Value, default!))
+            throw new InvalidOperationException("EntityId value can only be set once.");
 
         Value = value;
     }
@@ -21,17 +32,37 @@ public abstract class EntityId : ValueObject
         yield return Value;
     }
 
-    public override string ToString() => Value.ToString();
-}
+    public override string ToString() => Value.ToString() ?? string.Empty;
 
-/// <summary>
-/// Strongly-typed ID with factory method for creation.
-/// Example: public sealed class OrderId : EntityId&lt;OrderId&gt; { private OrderId(Guid value) : base(value) {} }
-/// </summary>
-public abstract class EntityId<T> : EntityId where T : EntityId<T>
-{
-    protected EntityId(Guid value) : base(value) { }
+    private static bool IsDefault(TValue value)
+    {
+        if (EqualityComparer<TValue>.Default.Equals(value, default!))
+            return true;
 
-    public static T New() => (T)Activator.CreateInstance(typeof(T), Guid.NewGuid())!;
-    public static T FromGuid(Guid value) => (T)Activator.CreateInstance(typeof(T), value)!;
+        return value switch
+        {
+            string s when string.IsNullOrWhiteSpace(s) => true,
+            Guid g when g == Guid.Empty => true,
+           
+            long and <= 0 => true,
+            int and <= 0 => true,
+            short and <= 0 => true,
+            sbyte and <= 0 => true,
+            
+            uint and 0 => true,
+            ushort and 0 => true,
+            ulong and 0 => true,
+            byte and 0 => true,
+
+            _ => false
+        };
+    }
+    
+    public static TId Create<TId>(TValue value)
+        where TId : EntityId<TValue>, new()
+    {
+        var id = new TId();
+        id.SetValue(value);
+        return id;
+    }
 }
