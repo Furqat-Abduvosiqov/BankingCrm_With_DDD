@@ -38,7 +38,7 @@ jobs:
         run: dotnet build --no-restore --configuration Release
 
       - name: Publish artifacts
-        run: dotnet publish src/BankingCrm.Customers/BankingCrm.Customers.API/BankingCrm.Customers.API.csproj -c Release -o ./publish
+        run: dotnet publish src/backend/BankingCrm.Customers/BankingCrm.Customers.API/BankingCrm.Customers.API.csproj -c Release -o ./publish
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
