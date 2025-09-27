@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\src\Shared\Domain.Shared\Domain.Shared.csproj" />
+      <ProjectReference Include="..\..\..\src\backend\Shared\Domain.Shared\Domain.Shared.csproj" />
     </ItemGroup>
 
 </Project>

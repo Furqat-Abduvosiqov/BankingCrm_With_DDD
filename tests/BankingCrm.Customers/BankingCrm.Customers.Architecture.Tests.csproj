@@ -25,10 +25,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\BankingCrm.Customers\BankingCrm.Customers.API\BankingCrm.Customers.API.csproj" />
-      <ProjectReference Include="..\..\src\BankingCrm.Customers\BankingCrm.Customers.Application\BankingCrm.Customers.Application.csproj" />
-      <ProjectReference Include="..\..\src\BankingCrm.Customers\BankingCrm.Customers.Domain\BankingCrm.Customers.Domain.csproj" />
-      <ProjectReference Include="..\..\src\BankingCrm.Customers\BankingCrm.Customers.Infrastructure\BankingCrm.Customers.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\src\backend\BankingCrm.Customers\BankingCrm.Customers.API\BankingCrm.Customers.API.csproj" />
+      <ProjectReference Include="..\..\src\backend\BankingCrm.Customers\BankingCrm.Customers.Application\BankingCrm.Customers.Application.csproj" />
+      <ProjectReference Include="..\..\src\backend\BankingCrm.Customers\BankingCrm.Customers.Domain\BankingCrm.Customers.Domain.csproj" />
+      <ProjectReference Include="..\..\src\backend\BankingCrm.Customers\BankingCrm.Customers.Infrastructure\BankingCrm.Customers.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
